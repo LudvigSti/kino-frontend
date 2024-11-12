@@ -1,0 +1,15 @@
+.movie-poster {
+    margin: 1rem;
+    background-color: #1a1d43;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.movie-poster img {
+    border-radius: 5px;
+    height: 200px;
+    width: 150px;
+}
