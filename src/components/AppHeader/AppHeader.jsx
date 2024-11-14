@@ -19,9 +19,6 @@ const AppHeader = () => {
           <li>
             <a href='#register'>Registrer</a>
           </li>
-          <li>
-            <Link to='/profile'>Profil</Link>
-          </li>
         </ul>
       </nav>
     </header>

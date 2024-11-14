@@ -16,7 +16,6 @@ const Profile = () => {
 
   const onInputChange = (event) => {
     const { name, value } = event.target;
-    console.log(name, value);
     setProfile({ ...profile, [name]: value });
   };
 
@@ -27,6 +26,7 @@ const Profile = () => {
     console.log("Last name:", profile.lastName);
     console.log("Email:", profile.email);
     console.log("Phone:", profile.phone);
+    console.log("Date of birth:", profile.dateOfBirth);
   };
 
   return (
@@ -40,7 +40,7 @@ const Profile = () => {
               <label htmlFor='firstName'>Fornavn</label>
               <input
                 type='text'
-                id='firstName'
+                name='firstName'
                 placeholder='Fornavn'
                 onChange={onInputChange}
               />
@@ -69,6 +69,15 @@ const Profile = () => {
                 type='tel'
                 name='phone'
                 placeholder='Telefon'
+                onChange={onInputChange}
+              />
+            </div>
+            <div className='form-group'>
+              <label htmlFor='dob'>Fødselsdato</label>
+              <input
+                type='date'
+                name='dateOfBirth'
+                placeholder='Fødselsdato'
                 onChange={onInputChange}
               />
             </div>
