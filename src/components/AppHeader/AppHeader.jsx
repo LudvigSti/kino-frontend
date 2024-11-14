@@ -1,4 +1,5 @@
 import "./appHeader.css";
+import { Link } from "react-router-dom";
 
 const AppHeader = () => {
   return (
@@ -13,7 +14,7 @@ const AppHeader = () => {
             <a href='#kinoer'>Kinoer</a>
           </li>
           <li>
-            <a href='#logginn'>Logg inn</a>
+            <Link to='/login'>Logg inn</Link>
           </li>
           <li>
             <a href='#register'>Registrer</a>
