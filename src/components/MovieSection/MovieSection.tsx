@@ -1,8 +1,18 @@
+import React from 'react';
 import MoviePoster from "../MoviePoster/MoviePoster";
 import { Link } from "react-router-dom";
 import "./movieSection.css";
 
-const MovieSection = ({ title, movies }) => {
+interface Movie {
+  image: string;
+}
+
+interface MovieSectionProps {
+  title: string;
+  movies: Movie[];
+}
+
+const MovieSection: React.FC<MovieSectionProps> = ({ title, movies }) => {
   return (
     <div className='movie-section'>
       <h2>{title}</h2>
