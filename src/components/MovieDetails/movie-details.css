@@ -1,0 +1,22 @@
+.movie-details {
+    padding: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: rgba(14, 23, 52, 1);
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    font-size: large;
+}
+
+.movie-details h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.movie-banner {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
