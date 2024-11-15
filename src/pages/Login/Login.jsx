@@ -19,26 +19,38 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Retrieve user from local storage
-    const storedUser = JSON.parse(localStorage.getItem('user'));
-    const storedProfile = JSON.parse(localStorage.getItem('profile'));
+    const loginData = {
+      email: formData.email,
+      password: formData.password
+    };
 
-    if (storedUser && storedProfile && storedUser.email === formData.email && storedUser.password === formData.password) {
-      // Save user data in cookies
-      const userData = {
-        ...storedUser,
-        ...storedProfile
-      };
+    try {
+      const response = await fetch('http://localhost:5000/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+      }
+    });
 
-      Cookies.set('user', JSON.stringify(userData), { expires: 7 });
-
-      // Navigate to home page after successful login
-      navigate('/');
+    if (response.ok) {
+      const users = await response.json();
+      const user = users.find(user => user.email === formData.email && user.password === formData.password);
+      
+      if (user) {
+        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        navigate('/');
+      } else {
+        setError('Invalid email or password');
+      }
     } else {
-      setError('Invalid email or password');
+      setError('Failed to fetch users');
+    }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred. Please try again');
     }
   };
 

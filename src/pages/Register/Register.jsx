@@ -12,6 +12,7 @@ const Register = () => {
         dob: ''
       });
 
+      const [error, setError] = useState('');
       const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -22,36 +23,120 @@ const Register = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  const validateDateOfBirth = (dob) => {
+    const dateOfBirth = new Date(dob);
+    const today = new Date();
+    const age = today.getFullYear() - dateOfBirth.getFullYear();
+    const monthDifference = today.getMonth() - dateOfBirth.getMonth();
+    if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dateOfBirth.getDate())) {
+      age--;
+    }
+    return age >= 16;
+  };
+
+  const validateFormData = () => {
+    if (!formData.email) {
+      setError('Email is required');
+      return false;
+    }
+    if (!validateEmail(formData.email)) {
+      setError('Invalid email format');
+      return false;
+    }
+    if (!formData.password) {
+      setError('Password is required');
+      return false;
+    }
+    if (!validatePassword(formData.password)) {
+      setError('Password must be at least 8 characters long, contain uppercase and lowercase letters and a number');
+      return false;
+    }
+    if (!formData.firstname) {
+      setError('First name is required');
+      return false;
+    }
+    if (!formData.lastname) {
+      setError('Last name is required');
+      return false;
+    }
+    if (!formData.dob) {
+      setError('Date of birth is required');
+      return false;
+    }
+    if (!validateDateOfBirth(formData.dob)) {
+      setError('You must be at least 18 years old');
+      return false;
+    }
+    return true;
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Generate UserId and ProfileId
-    const userId = Date.now(); // Simple unique ID generation for demonstration
-    const profileId = Date.now() + 1;
+    if (!validateFormData()) {
+      return;
+    }
 
-    // Create User and Profile objects
-    const user = {
-      userId,
+    try {
+      const response = await fetch('http://localhost:5000/user', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const users = await response.json();
+        const emailExists = users.some(user => user.email === formData.email);
+
+        if (emailExists) {
+          setError('Email already exists');
+          return;
+        }
+      } else {
+        console.error('Failed to fetch users');
+        return;
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      return;
+    }
+
+    const userProfile = {
       email: formData.email,
-      password: formData.password
+      password: formData.password,
+      firstName: formData.firstname,
+      lastName: formData.lastname,
+      dateOfBirth: formData.dob
     };
 
-    const profile = {
-      profileId,
-      userId,
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      dateOfBirth: formData.dob,
-      icon: '',
-      points: 0
-    };
+    try {
+      const response = await fetch('http://localhost:5000/profile/CreateUserProfile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userProfile)
+    });
 
-    // Save user and profile to local storage
-    localStorage.setItem('user', JSON.stringify(user));
-    localStorage.setItem('profile', JSON.stringify(profile));
-
-    // Navigate to login page after registration
-    navigate('/login');
+    if(response.ok) {
+      navigate('/login');
+    } else{
+      console.error('Failed to register user');
+    }
+  } catch (error) {
+    console.error('Error: ', error)
+  }
   };
 
   return (
@@ -109,6 +194,7 @@ const Register = () => {
             onChange={handleChange}
           />
         </div>
+        {error && <p className="error-message">{error}</p>}
         <button type='submit' className='register-button'>
             Registrer
         </button>
