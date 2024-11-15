@@ -1,5 +1,7 @@
-module.exports = {
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js'],
+import type { Config } from '@jest/types';
+
+const config: Config.InitialOptions = {
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   testEnvironment: 'jsdom',
   transform: {
     '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
@@ -8,3 +10,5 @@ module.exports = {
     '/node_modules/(?!@testing-library)',
   ],
 };
+
+export default config;

@@ -2,20 +2,29 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './register.css';
 
-const Register = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        firstname: '',
-        lastname: '',
-        dob: ''
-      });
+interface FormData {
+  username: string;
+  email: string;
+  password: string;
+  firstname: string;
+  lastname: string;
+  dob: string;
+}
 
-      const [error, setError] = useState('');
-      const navigate = useNavigate();
+const Register: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    dob: ''
+  });
 
-    const handleChange = (e) => {
+  const [error, setError] = useState<string>('');
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -23,20 +32,20 @@ const Register = () => {
     }));
   };
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = (password: string) => {
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
     return passwordRegex.test(password);
   };
 
-  const validateDateOfBirth = (dob) => {
+  const validateDateOfBirth = (dob: string) => {
     const dateOfBirth = new Date(dob);
     const today = new Date();
-    const age = today.getFullYear() - dateOfBirth.getFullYear();
+    let age = today.getFullYear() - dateOfBirth.getFullYear();
     const monthDifference = today.getMonth() - dateOfBirth.getMonth();
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < dateOfBirth.getDate())) {
       age--;
@@ -74,13 +83,13 @@ const Register = () => {
       return false;
     }
     if (!validateDateOfBirth(formData.dob)) {
-      setError('You must be at least 18 years old');
+      setError('You must be at least 16 years old');
       return false;
     }
     return true;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validateFormData()) {
@@ -97,7 +106,7 @@ const Register = () => {
 
       if (response.ok) {
         const users = await response.json();
-        const emailExists = users.some(user => user.email === formData.email);
+        const emailExists = users.some((user: { email: string }) => user.email === formData.email);
 
         if (emailExists) {
           setError('Email already exists');
@@ -127,16 +136,16 @@ const Register = () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(userProfile)
-    });
+      });
 
-    if(response.ok) {
-      navigate('/login');
-    } else{
-      console.error('Failed to register user');
+      if (response.ok) {
+        navigate('/login');
+      } else {
+        console.error('Failed to register user');
+      }
+    } catch (error) {
+      console.error('Error: ', error);
     }
-  } catch (error) {
-    console.error('Error: ', error)
-  }
   };
 
   return (
@@ -144,13 +153,13 @@ const Register = () => {
       <div className='register-card'>
         <h2>Registrer</h2>
         <form onSubmit={handleSubmit}>
-        <div className='input-group'>
+          <div className='input-group'>
             <label htmlFor='email'>E-post</label>
             <input
               type='text'
               id='email'
               placeholder='Skriv din e-post'
-              value = {formData.email}
+              value={formData.email}
               onChange={handleChange}
             />
           </div>
@@ -161,17 +170,17 @@ const Register = () => {
               id='password'
               placeholder='Skriv ditt passord'
               value={formData.password}
-                onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
-        <div className='input-group'>
+          <div className='input-group'>
             <label htmlFor='firstname'>Fornavn</label>
             <input
               type='text'
               id='firstname'
               placeholder='Skriv ditt fornavn'
               value={formData.firstname}
-                onChange={handleChange}
+              onChange={handleChange}
             />
           </div>
           <div className='input-group'>
@@ -180,27 +189,27 @@ const Register = () => {
               type='text'
               id='lastname'
               placeholder='Skriv ditt etternavn'
-                value={formData.lastname}
-                    onChange={handleChange}
+              value={formData.lastname}
+              onChange={handleChange}
             />
           </div>
-          <div className="input-group">
-          <label htmlFor="dob">Fødselsdato</label>
-          <input
-            type="date"
-            id="dob"
-            placeholder="Enter your date of birth"
-            value={formData.dob}
-            onChange={handleChange}
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type='submit' className='register-button'>
+          <div className='input-group'>
+            <label htmlFor='dob'>Fødselsdato</label>
+            <input
+              type='date'
+              id='dob'
+              placeholder='Enter your date of birth'
+              value={formData.dob}
+              onChange={handleChange}
+            />
+          </div>
+          {error && <p className='error-message'>{error}</p>}
+          <button type='submit' className='register-button'>
             Registrer
-        </button>
+          </button>
         </form>
         <p className='login-link'>
-          Har du allerede bruker? <a href='/login'>Logg inn</a>
+          Har du allerede bruker? <Link to='/login'>Logg inn</Link>
         </p>
       </div>
     </div>

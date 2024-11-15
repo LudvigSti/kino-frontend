@@ -1,14 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
 import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './appHeader.css';
 
-const AppHeader = () => {
+interface UserProfile {
+  firstName: string;
+  lastName: string;
+  email: string;
+  userId: number;
+}
+
+const AppHeader: React.FC = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [profile, setProfile] = useState(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const userCookie = Cookies.get('user');
   const user = userCookie ? JSON.parse(userCookie) : null;
-  const dropdownRef = useRef(null);
+  const dropdownRef = useRef<HTMLLIElement>(null);
   const navigate = useNavigate();
 
   const toggleDropdown = () => {
@@ -25,8 +32,8 @@ const AppHeader = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownVisible(false);
       }
     };
@@ -62,7 +69,7 @@ const AppHeader = () => {
     };
 
     fetchProfile();
-  }, []);
+  }, [user]);
 
   return (
     <header className='app-header'>
@@ -90,10 +97,10 @@ const AppHeader = () => {
           ) : (
             <>
               <li>
-                <a href='/login'>Logg inn</a>
+                <Link to='/login'>Logg inn</Link>
               </li>
               <li>
-                <a href='/register'>Registrer</a>
+                <Link to='/register'>Registrer</Link>
               </li>
             </>
           )}

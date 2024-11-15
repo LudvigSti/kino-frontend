@@ -47,6 +47,7 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.0.1",
+    "@types/js-cookie": "^3.0.6",
     "autoprefixer": "^10.4.20",
     "babel-jest": "^29.7.0",
     "jest": "^27.5.1",

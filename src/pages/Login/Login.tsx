@@ -3,15 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './login.css';
 
-const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [error, setError] = useState('');
+interface FormData {
+  email: string;
+  password: string;
+}
+
+const Login: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({ email: '', password: '' });
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -19,7 +21,7 @@ const Login = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const loginData = {
@@ -32,22 +34,22 @@ const Login = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
-      }
-    });
+        }
+      });
 
-    if (response.ok) {
-      const users = await response.json();
-      const user = users.find(user => user.email === formData.email && user.password === formData.password);
-      
-      if (user) {
-        Cookies.set('user', JSON.stringify(user), { expires: 7 });
-        navigate('/');
+      if (response.ok) {
+        const users = await response.json();
+        const user = users.find((user: { email: string; password: string }) => user.email === formData.email && user.password === formData.password);
+
+        if (user) {
+          Cookies.set('user', JSON.stringify(user), { expires: 7 });
+          navigate('/');
+        } else {
+          setError('Invalid email or password');
+        }
       } else {
-        setError('Invalid email or password');
+        setError('Failed to fetch users');
       }
-    } else {
-      setError('Failed to fetch users');
-    }
     } catch (error) {
       console.error('Error:', error);
       setError('An error occurred. Please try again');

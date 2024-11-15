@@ -78,7 +78,7 @@ test('displays error message on invalid date of birth', async () => {
   fireEvent.change(screen.getByPlaceholderText(/Enter your date of birth/i), { target: { value: '2020-01-01' } });
   fireEvent.click(screen.getByRole('button', { name: /Registrer/i }));
 
-  expect(await screen.findByText(/You must be at least 18 years old/i)).toBeInTheDocument();
+  expect(await screen.findByText(/You must be at least 16 years old/i)).toBeInTheDocument();
 });
 
 test('displays error message on existing email', async () => {
