@@ -1,0 +1,36 @@
+
+.movie-details h1 {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow:
+        -2px -2px 0 black,
+        2px -2px 0 black,
+        -2px 2px 0 black,
+        2px 2px 0 black,
+        -2px 0px 0 black,
+        2px 0px 0 black,
+        0px -2px 0 black,
+        0px 2px 0 black;
+}
+
+.movie-banner img{
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.movie-about{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    padding: 10px;
+    border: 1px solid #b1a9a9;
+    border-radius: 4px;
+}
+
+.movie-about p{
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}

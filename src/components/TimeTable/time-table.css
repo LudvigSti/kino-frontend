@@ -1,0 +1,39 @@
+.timetable {
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.timetable h2 {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 1rem;
+}
+
+.timetable ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+.screening {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #444;
+    background-color: #1a1d43;
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.screening-list h3{
+    font-size: 1.5rem;
+    color: #ffffff;
+    margin-top: 10px;
+}
+
+.screening-time,
+.screening-location {
+    font-size: 1rem;
+    color: #cfd2dc;
+}
