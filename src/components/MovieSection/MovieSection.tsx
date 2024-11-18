@@ -1,5 +1,6 @@
 import React from 'react';
 import MoviePoster from "../MoviePoster/MoviePoster";
+import { Link } from "react-router-dom";
 import "./movieSection.css";
 
 interface Movie {
@@ -17,7 +18,9 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, movies }) => {
       <h2>{title}</h2>
       <ul className='movie-list'>
         {movies.map((movie, index) => (
-          <MoviePoster key={index} image={movie.image} />
+          <Link to='moviepage'>
+            <MoviePoster key={index} image={movie.image} />
+          </Link>
         ))}
       </ul>
     </div>
