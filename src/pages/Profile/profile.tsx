@@ -27,7 +27,7 @@ const Profile: React.FC = () => {
     points: 0,
     icon: "",
   });
-
+  const [profileName, setProfileName] = useState('');
   const [isLoaded, setIsLoaded] = useState(false);
 
  useEffect(() => {
@@ -45,6 +45,7 @@ const Profile: React.FC = () => {
           if (response.ok) {
             const profileData = await response.json();
             setProfile(profileData);
+            setProfileName(profileData.firstName + ' ' + profileData.lastName);
             setIsLoaded(true);
           } else {
             console.error('Failed to fetch profile', user.userId);
@@ -86,8 +87,6 @@ const Profile: React.FC = () => {
     }
   }
 
-
-
   return (
     <>
       <AppHeader />
@@ -95,7 +94,7 @@ const Profile: React.FC = () => {
         <div className='profile-container'>
           <div className='profile-info'>
             <img src='/images/profile_vector.png' alt='Profile Icon' />
-            <h2>{profile.firstName} {profile.lastName}</h2>
+            <h2>{profileName}</h2>
             <p>Score: {profile.points}</p>
           </div>
           <h2>Endre Profil</h2>
