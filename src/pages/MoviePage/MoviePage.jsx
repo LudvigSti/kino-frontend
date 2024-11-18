@@ -12,13 +12,14 @@ const MoviePage = () => {
     rating: 9.2,
     genres: ["crime", "drama"],
     director: "Francis Ford Coppola",
+    duration: 175,
   };
 
   const screenings = [
-    { time: "10:00 AM", location: "Cinema 1" },
-    { time: "9:00 PM", location: "Cinema 1" },
-    { time: "1:00 PM", location: "Cinema 2" },
-    { time: "6:30 PM", location: "Cinema 3" },
+    { time: "10:00 AM", location: "Cinema 1", duration: 175 },
+    { time: "9:00 PM", location: "Cinema 1", duration: 175 },
+    { time: "1:00 PM", location: "Cinema 2", duration: 175 },
+    { time: "6:30 PM", location: "Cinema 3", duration: 175 },
   ];
 
   return (

@@ -19,6 +19,26 @@ const Timetable = ({ screenings }) => {
     });
   });
 
+  const timeFinished = (time, duration_minutes) => {
+    const [timePart, meridiem] = time.split(" ");
+    const [hours, minutes] = timePart.split(":").map(Number);
+
+    console.log(duration_minutes);
+
+    const date = new Date();
+    date.setHours(meridiem === "PM" && hours !== 12 ? hours + 12 : hours);
+    date.setMinutes(minutes);
+
+    date.setMinutes(date.getMinutes() + duration_minutes);
+
+    // Format back to "hh:mm AM/PM"
+    const newHours = date.getHours() % 12 || 12; // Convert 24-hour format to 12-hour
+    const newMinutes = String(date.getMinutes()).padStart(2, "0"); // Ensure 2-digit minutes
+    const newMeridiem = date.getHours() >= 12 ? "PM" : "AM";
+
+    return `${newHours}:${newMinutes} ${newMeridiem}`;
+  };
+
   return (
     <div className='timetable'>
       <h2>Visninger:</h2>
@@ -30,9 +50,10 @@ const Timetable = ({ screenings }) => {
               <ul>
                 {screening.map((screening, index) => (
                   <li key={index} className='screening'>
-                    <div className='screening-time'>{screening.time}</div>
-                    <div className='screening-location'>
-                      {screening.location}
+                    <div className='screening-time'>
+                      {screening.time}
+                      {" ---- "}
+                      {timeFinished(screening.time, screening.duration)}
                     </div>
                     <Button Text='Bestill' Size='small' />
                   </li>

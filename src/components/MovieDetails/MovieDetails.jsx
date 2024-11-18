@@ -13,6 +13,7 @@ const MovieDetails = ({ movie }) => {
         <p>Rating: {movie.rating}</p>
         <p>Genres: {movie.genres.join(", ")}</p>
         <p>Director: {movie.director}</p>
+        <p>Duration: {movie.duration} minutes</p>
       </div>
     </div>
   );
