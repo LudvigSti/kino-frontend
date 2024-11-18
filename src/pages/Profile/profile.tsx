@@ -3,6 +3,7 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import Button from "../../components/Button/Button";
 import "./profile.css";
 import Cookies from 'js-cookie';
+import { profileEnd } from 'console';
 
 interface Profile {
   profileId: number | null;
@@ -92,9 +93,14 @@ const Profile: React.FC = () => {
       <AppHeader />
       <div className='profile-page'>
         <div className='profile-container'>
+          <div className='profile-info'>
+            <img src='/images/profile_vector.png' alt='Profile Icon' />
+            <h2>{profile.firstName} {profile.lastName}</h2>
+            <p>Score: {profile.points}</p>
+          </div>
           <h2>Endre Profil</h2>
           {isLoaded ? (
-            <>
+            <div className='profile-change'>
               <form className='profile-form' onSubmit={onCreateProfile}>
                 <div className='form-group'>
                   <label htmlFor='firstName'>Fornavn</label>
@@ -138,7 +144,7 @@ const Profile: React.FC = () => {
                 </div>     
               </form>
               <Button Text='Endre profil' onClick={onCreateProfile} />
-            </>
+            </div>
           ) : (
             <h2>Loading...</h2>
           )}
