@@ -23,8 +23,6 @@ const Timetable = ({ screenings }) => {
     const [timePart, meridiem] = time.split(" ");
     const [hours, minutes] = timePart.split(":").map(Number);
 
-    console.log(duration_minutes);
-
     const date = new Date();
     date.setHours(meridiem === "PM" && hours !== 12 ? hours + 12 : hours);
     date.setMinutes(minutes);
