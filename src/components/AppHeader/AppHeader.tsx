@@ -28,7 +28,7 @@ const AppHeader: React.FC = () => {
   };
 
   const handleShowProfile = () => {
-    navigate('/profile');
+    navigate('/profile' + (user ? `/${user.userId}` : ''));
   };
 
   useEffect(() => {

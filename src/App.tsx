@@ -9,13 +9,13 @@ import Register from './pages/Register/Register';
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/moviepage" element={<MoviePage />} />
-      </Routes>
+        <Routes>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/moviepage" element={<MoviePage />} />
+          <Route path="/profile/:id" element={<Profile />} />
+        </Routes>
     </>
   );
 }
