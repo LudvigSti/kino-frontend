@@ -5,10 +5,10 @@ import "./profile.css";
 import Cookies from 'js-cookie';
 
 interface Profile {
+  profileId: number | null;
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
   dateOfBirth: string;
   points: number;
   icon: string;
@@ -18,10 +18,10 @@ const Profile: React.FC = () => {
   const userCookie = Cookies.get('user');
   const user = userCookie ? JSON.parse(userCookie) : null;
   const [profile, setProfile] = useState<Profile>({
+    profileId: null,
     firstName: "",
     lastName: "",
     email: user.email,
-    phone: "",
     dateOfBirth: "",
     points: 0,
     icon: "",
@@ -61,22 +61,38 @@ const Profile: React.FC = () => {
     setProfile({ ...profile, [name]: value });
   };
 
-  const onCreateProfile = (event: FormEvent<HTMLFormElement>) => {
+  const onCreateProfile = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    console.log("First name:", profile.firstName);
-    console.log("Last name:", profile.lastName);
-    console.log("Email:", profile.email);
-    console.log("Phone:", profile.phone);
-    console.log("Date of birth:", profile.dateOfBirth);
-  };
+    try {
+      const response = await fetch(`http://localhost:5000/profile/${profile.profileId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(profile)
+      });
+
+      if (response.ok) {
+        const profileData = await response.json();
+        setProfile(profileData);
+        setIsLoaded(true);
+      } else {
+        console.error('Failed to fetch profile', user.userId);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+
+
 
   return (
     <>
       <AppHeader />
       <div className='profile-page'>
         <div className='profile-container'>
-          <h2>Lag Profil</h2>
+          <h2>Endre Profil</h2>
           {isLoaded ? (
             <>
               <form className='profile-form' onSubmit={onCreateProfile}>
@@ -111,16 +127,6 @@ const Profile: React.FC = () => {
                   />
                 </div>
                 <div className='form-group'>
-                  <label htmlFor='phone'>Telefon</label>
-                  <input
-                    type='tel'
-                    name='phone'
-                    placeholder='Telefon'
-                    value={profile.phone}
-                    onChange={onInputChange}
-                  />
-                </div>
-                <div className='form-group'>
                   <label htmlFor='dateOfBirth'>Fødselsdato</label>
                   <input
                     type='date'
@@ -131,7 +137,7 @@ const Profile: React.FC = () => {
                   />
                 </div>     
               </form>
-              <Button Text='Lag profil' onClick={onCreateProfile} />
+              <Button Text='Endre profil' onClick={onCreateProfile} />
             </>
           ) : (
             <h2>Loading...</h2>
