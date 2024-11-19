@@ -5,11 +5,20 @@
     border-radius: 5px;
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
 .movie-poster img {
     border-radius: 5px;
-    height: 200px;
-    width: 150px;
+    height: 220px;
+    width: 165px;
+    padding-bottom: 6px;
+}
+.movie-title {
+    margin-top:0.5rem;
+    font-size: 1rem;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 500;
 }
