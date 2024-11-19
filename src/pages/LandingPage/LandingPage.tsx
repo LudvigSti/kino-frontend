@@ -5,6 +5,7 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import "./landingPage.css";
 
 interface Movie {
+  movieId: number;
   title: string;
   rating: number;
   ageRating: number;
@@ -12,6 +13,7 @@ interface Movie {
   director: string;
   image: string;
   releaseYear: Date; 
+  images: string[];
 
 }
 
@@ -26,10 +28,17 @@ const LandingPage: React.FC = () => {
       try {
         const res = await fetch("https://localhost:5001/movie");
         const data: Movie[] = await res.json();
-  
-        setNewMovies(data);
-        setPopularMovies(data);
-        setHighestRated(data.filter((movie: Movie) => movie.rating >= 7 ))
+        
+        const processedData = data.map(movie => ({
+          ...movie,  //Loads movies with only the first image in the image array
+          image: movie.images[0]
+        })) 
+
+       
+
+        setNewMovies(processedData);
+        setPopularMovies(processedData);
+        setHighestRated(processedData.filter((movie: Movie) => movie.rating >= 7 ))
 
       } catch (e) {
         console.error(e);

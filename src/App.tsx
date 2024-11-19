@@ -13,7 +13,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
           <Route path="/" element={<LandingPage />} />
-          <Route path="/moviepage" element={<MoviePage />} />
+          <Route path="/moviepage/:id" element={<MoviePage />} />
           <Route path="/profile/:id" element={<Profile />} />
         </Routes>
     </>

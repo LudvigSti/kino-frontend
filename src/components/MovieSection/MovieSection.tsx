@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import "./movieSection.css";
 
 interface Movie {
+  movieId: number;
   image: string;
+  title: string
 }
 
 interface MovieSectionProps {
@@ -17,11 +19,13 @@ const MovieSection: React.FC<MovieSectionProps> = ({ title, movies }) => {
     <div className='movie-section'>
       <h2>{title}</h2>
       <ul className='movie-list'>
-        {movies.map((movie, index) => (
-          <Link to='moviepage'>
-            <MoviePoster key={index} image={movie.image} />
+        {movies.map((movie) => (
+          <Link to={`/moviepage/${movie.movieId}`} key= {movie.movieId}>
+            <MoviePoster image={movie.image} title={movie.title} />
           </Link>
+          
         ))}
+        
       </ul>
     </div>
   );

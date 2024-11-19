@@ -1,19 +1,30 @@
 import "./movie-details.css";
-import { getImageURL } from "../../Utils/image-util";
 
 const MovieDetails = ({ movie }) => {
   return (
     <div className='movie-details'>
       <h1>{movie.title}</h1>
       <div className='movie-banner'>
-        <img src={getImageURL(movie.image)} alt='movie banner' />
+        <img src={movie.image} alt='movie banner' />
       </div>
+      
+      {movie.trailer && (
+        <div className="movie-trailer">
+          <h3>Watch the Trailer</h3>
+          <iframe
+            src={movie.trailer}
+            title="Movie Trailer"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
+      
       <div className='movie-about'>
-        <p>Release Year: {movie.releaseYear}</p>
-        <p>Rating: {movie.rating}</p>
-        <p>Genres: {movie.genres.join(", ")}</p>
-        <p>Director: {movie.director}</p>
-        <p>Duration: {movie.duration} minutes</p>
+        <p><strong>Release Year:</strong> {movie.releaseYear}</p>
+        <p><strong>Rating:</strong> {movie.rating}</p>
+        <p><strong>Director:</strong> {movie.director}</p>
+        <p><strong>Duration:</strong> {movie.duration} minutes</p>
       </div>
     </div>
   );
