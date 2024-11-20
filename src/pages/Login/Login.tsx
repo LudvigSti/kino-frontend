@@ -24,31 +24,23 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const loginData = {
-      email: formData.email,
-      password: formData.password
-    };
-
     try {
-      const response = await fetch('http://localhost:5000/user', {
-        method: 'GET',
+      const response = await fetch('http://localhost:5000/user/login', {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json'
-        }
+        },
+        body: JSON.stringify({ email: formData.email, password: formData.password })
       });
 
       if (response.ok) {
-        const users = await response.json();
-        const user = users.find((user: { email: string; password: string }) => user.email === formData.email && user.password === formData.password);
-
-        if (user) {
-          Cookies.set('user', JSON.stringify(user), { expires: 7 });
-          navigate('/');
-        } else {
-          setError('Invalid email or password');
-        }
+        const result = await response.json();
+        const email = formData.email
+        Cookies.set('user', JSON.stringify(email), { expires: 7, secure: true, sameSite: 'Strict' });
+        navigate('/');
       } else {
-        setError('Failed to fetch users');
+        const errorText = await response.text();
+        setError(errorText);
       }
     } catch (error) {
       console.error('Error:', error);
