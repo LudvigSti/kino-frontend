@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
     profileId: null,
     firstName: "",
     lastName: "",
-    email: user.email,
+    email: user,
     dateOfBirth: "",
     points: 0,
     icon: "",
@@ -32,9 +32,9 @@ const Profile: React.FC = () => {
 
  useEffect(() => {
     const fetchProfile = async () => {
-      if (user && user.userId) {
+      if (user) {
         try {
-          const response = await fetch(`http://localhost:5000/profile/getProfileByUserId?userId=${user.userId}`, {
+          const response = await fetch(`http://localhost:5000/profile/getProfileByEmail?email=${user}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ const Profile: React.FC = () => {
             setProfileName(profileData.firstName + ' ' + profileData.lastName);
             setIsLoaded(true);
           } else {
-            console.error('Failed to fetch profile', user.userId);
+            console.error('Failed to fetch profile', user);
           }
         } catch (error) {
           console.error('Error:', error);
@@ -127,7 +127,7 @@ const Profile: React.FC = () => {
                     type='email'
                     name='email'
                     placeholder='E-post'
-                    value={user.email}
+                    value={user}
                     onChange={onInputChange}
                   />
                 </div>

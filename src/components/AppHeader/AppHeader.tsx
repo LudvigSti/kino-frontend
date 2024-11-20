@@ -46,9 +46,9 @@ const AppHeader: React.FC = () => {
 
   useEffect(() => {
     const fetchProfile = async () => {
-      if (user && user.userId) {
+      if (user) {
         try {
-          const response = await fetch(`http://localhost:5000/profile/getProfileByUserId?userId=${user.userId}`, {
+          const response = await fetch(`http://localhost:5000/profile/getProfileByEmail?email=${user}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -58,9 +58,10 @@ const AppHeader: React.FC = () => {
 
           if (response.ok) {
             const profileData = await response.json();
+            console.log(profileData)
             setProfile(profileData);
           } else {
-            console.error('Failed to fetch profile', user.userId);
+            console.error('Failed to fetch profile', user);
           }
         } catch (error) {
           console.error('Error:', error);
