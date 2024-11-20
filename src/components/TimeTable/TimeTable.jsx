@@ -1,9 +1,10 @@
 import "./time-table.css";
 import Button from "../Button/Button";
 
-const Timetable = ({ screenings }) => {
+const Timetable = ({ screenings, movie }) => {
+  console.log(screenings);
   const unique_locations = [
-    ...new Set(screenings.map((screening) => screening.location)),
+    ...new Set(screenings.map((screening) => screening.name)),
   ];
 
   const screenings_by_location = unique_locations.map((location) => {
@@ -11,28 +12,27 @@ const Timetable = ({ screenings }) => {
   });
 
   //sort screenings by time
-  screenings_by_location.forEach((screening) => {
-    screening.sort((a, b) => {
-      const time1 = a.time.split(":");
-      const time2 = b.time.split(":");
+  screenings_by_location.forEach((screenings) => {
+    console.log(screenings);
+    screenings.sort((a, b) => {
+      const time1 = a.screeningTime.split(":");
+      const time2 = b.screeningTime.split(":");
       return time1[0] - time2[0] || time1[1] - time2[1];
     });
   });
 
-  const timeFinished = (time, duration_minutes) => {
-    const [timePart, meridiem] = time.split(" ");
-    const [hours, minutes] = timePart.split(":").map(Number);
-
-    const date = new Date();
-    date.setHours(meridiem === "PM" && hours !== 12 ? hours + 12 : hours);
-    date.setMinutes(minutes);
-
+  const getTimeFinished = (time, duration_minutes) => {
+    const date = new Date(time);
     date.setMinutes(date.getMinutes() + duration_minutes);
 
-    // Format back to "hh:mm AM/PM"
-    const newHours = date.getHours() % 12 || 12; // Convert 24-hour format to 12-hour
-    const newMinutes = String(date.getMinutes()).padStart(2, "0"); // Ensure 2-digit minutes
-    const newMeridiem = date.getHours() >= 12 ? "PM" : "AM";
+    return formatTime(date);
+  };
+
+  const formatTime = (time) => {
+    // Format to "hh:mm AM/PM"
+    const newHours = time.getHours() % 12 || 12; // Convert 24-hour format to 12-hour
+    const newMinutes = String(time.getMinutes()).padStart(2, "0"); // Ensure 2-digit minutes
+    const newMeridiem = time.getHours() >= 12 ? "PM" : "AM";
 
     return `${newHours}:${newMinutes} ${newMeridiem}`;
   };
@@ -49,9 +49,9 @@ const Timetable = ({ screenings }) => {
                 {screening.map((screening, index) => (
                   <li key={index} className='screening'>
                     <div className='screening-time'>
-                      {screening.time}
+                      {formatTime(new Date(screening.screeningTime))}
                       {" ---- "}
-                      {timeFinished(screening.time, screening.duration)}
+                      {getTimeFinished(screening.screeningTime, movie.duration)}
                     </div>
                     <Button Text='Bestill' Size='small' />
                   </li>

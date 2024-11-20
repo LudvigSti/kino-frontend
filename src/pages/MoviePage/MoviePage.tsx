@@ -16,10 +16,9 @@ interface Movie {
   duration: number;
 }
 const MoviePage = () => {
-  //TODO make this the movie clicked on
-  const { id }  = useParams()
-  console.log("Movie ID:", id);
+  const { id }  = useParams();
   const [movie, setMovie] = useState<Movie | null>(null);
+  const [screenings, setScreenings] = useState<any[]>([]);
 
   
   useEffect( ()=> {
@@ -38,12 +37,19 @@ const MoviePage = () => {
   fetchMovieDetails(); 
   }, [id])
 
-  const screenings = [
-    { time: "10:00 AM", location: "Cinema 1", duration: 175 },
-    { time: "9:00 PM", location: "Cinema 1", duration: 175 },
-    { time: "1:00 PM", location: "Cinema 2", duration: 175 },
-    { time: "6:30 PM", location: "Cinema 3", duration: 175 },
-  ];
+  useEffect( ()=> {
+    const fetchScreenings = async () => { 
+      try {
+    const res = await fetch(`https://localhost:5001/screening/getScreeningsByMovieId/${id}`);
+    const data = await res.json()
+
+    setScreenings(data)
+  }
+  catch (e) {
+  }}
+  fetchScreenings(); 
+  }, [id])
+
   if (!movie) {
     return <div className="loading-screen">Loading...</div>; 
   }
@@ -53,7 +59,7 @@ const MoviePage = () => {
       <AppHeader />
       <div className='movie-page'>
         <MovieDetails movie={movie} />
-        <TimeTable screenings={screenings} />
+        <TimeTable screenings={screenings} movie={movie}/>
       </div>
     </div>
   );
