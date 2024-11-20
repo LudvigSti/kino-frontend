@@ -1,25 +1,50 @@
 import "./time-table.css";
 import Button from "../Button/Button";
+import { useEffect, useState } from "react";
 
 const Timetable = ({ screenings, movie }) => {
-  console.log(screenings);
-  const unique_locations = [
-    ...new Set(screenings.map((screening) => screening.name)),
-  ];
+  const [screeningsByLocation, setScreeningsByLocation] = useState([]);
 
-  const screenings_by_location = unique_locations.map((location) => {
-    return screenings.filter((screening) => screening.location === location);
-  });
+  // Get unique cinema locations
+  const getUniqueLocations = () => {
+    const locations = [
+      ...new Set(screenings.map((screening) => screening.cinemaHall.name)),
+    ];
+    return locations;
+  };
 
-  //sort screenings by time
-  screenings_by_location.forEach((screenings) => {
-    console.log(screenings);
-    screenings.sort((a, b) => {
-      const time1 = a.screeningTime.split(":");
-      const time2 = b.screeningTime.split(":");
-      return time1[0] - time2[0] || time1[1] - time2[1];
+  const getScreeningsByLocation = (locations) => {
+    const screeningLocations = locations.map((name) => {
+      const filteredScreenings = screenings.filter(
+        (screening) => screening.cinemaHall.name === name
+      );
+      return {
+        name,
+        screenings: filteredScreenings,
+      };
     });
-  });
+    return screeningLocations;
+  };
+
+  // Sort screenings by time
+  const sortScreeningsByTime = (screeningLocations) => {
+    const sortedScreenings = screeningLocations.map((location) => {
+      return {
+        ...location,
+        screenings: location.screenings.sort(
+          (a, b) => new Date(a.screeningTime) - new Date(b.screeningTime)
+        ),
+      };
+    });
+    return sortedScreenings;
+  };
+
+  useEffect(() => {
+    const locations = getUniqueLocations();
+    const screeningsByLocation = getScreeningsByLocation(locations);
+    const sortedScreenings = sortScreeningsByTime(screeningsByLocation);
+    setScreeningsByLocation(sortedScreenings);
+  }, [screenings]);
 
   const getTimeFinished = (time, duration_minutes) => {
     const date = new Date(time);
@@ -40,17 +65,17 @@ const Timetable = ({ screenings, movie }) => {
   return (
     <div className='timetable'>
       <h2>Visninger:</h2>
-      {screenings.length > 0 ? (
+      {screeningsByLocation.length > 0 ? (
         <div className='screening-list'>
-          {screenings_by_location.map((screening, index) => (
+          {screeningsByLocation.map((screeningList, index) => (
             <div key={index}>
-              <h3>{screening[0].location}</h3>
+              <h3>{screeningList.name}</h3>
               <ul>
-                {screening.map((screening, index) => (
+                {screeningList.screenings.map((screening, index) => (
                   <li key={index} className='screening'>
                     <div className='screening-time'>
                       {formatTime(new Date(screening.screeningTime))}
-                      {" ---- "}
+                      {" ---> "}
                       {getTimeFinished(screening.screeningTime, movie.duration)}
                     </div>
                     <Button Text='Bestill' Size='small' />
