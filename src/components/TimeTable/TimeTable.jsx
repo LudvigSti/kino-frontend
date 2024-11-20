@@ -1,38 +1,63 @@
 import "./time-table.css";
 import Button from "../Button/Button";
+import { useEffect, useState } from "react";
 
-const Timetable = ({ screenings }) => {
-  const unique_locations = [
-    ...new Set(screenings.map((screening) => screening.location)),
-  ];
+const Timetable = ({ screenings, movie }) => {
+  const [screeningsByLocation, setScreeningsByLocation] = useState([]);
 
-  const screenings_by_location = unique_locations.map((location) => {
-    return screenings.filter((screening) => screening.location === location);
-  });
+  // Get unique cinema locations
+  const getUniqueLocations = () => {
+    const locations = [
+      ...new Set(screenings.map((screening) => screening.cinemaHall.name)),
+    ];
+    return locations;
+  };
 
-  //sort screenings by time
-  screenings_by_location.forEach((screening) => {
-    screening.sort((a, b) => {
-      const time1 = a.time.split(":");
-      const time2 = b.time.split(":");
-      return time1[0] - time2[0] || time1[1] - time2[1];
+  const getScreeningsByLocation = (locations) => {
+    const screeningLocations = locations.map((name) => {
+      const filteredScreenings = screenings.filter(
+        (screening) => screening.cinemaHall.name === name
+      );
+      return {
+        name,
+        screenings: filteredScreenings,
+      };
     });
-  });
+    return screeningLocations;
+  };
 
-  const timeFinished = (time, duration_minutes) => {
-    const [timePart, meridiem] = time.split(" ");
-    const [hours, minutes] = timePart.split(":").map(Number);
+  // Sort screenings by time
+  const sortScreeningsByTime = (screeningLocations) => {
+    const sortedScreenings = screeningLocations.map((location) => {
+      return {
+        ...location,
+        screenings: location.screenings.sort(
+          (a, b) => new Date(a.screeningTime) - new Date(b.screeningTime)
+        ),
+      };
+    });
+    return sortedScreenings;
+  };
 
-    const date = new Date();
-    date.setHours(meridiem === "PM" && hours !== 12 ? hours + 12 : hours);
-    date.setMinutes(minutes);
+  useEffect(() => {
+    const locations = getUniqueLocations();
+    const screeningsByLocation = getScreeningsByLocation(locations);
+    const sortedScreenings = sortScreeningsByTime(screeningsByLocation);
+    setScreeningsByLocation(sortedScreenings);
+  }, [screenings]);
 
+  const getTimeFinished = (time, duration_minutes) => {
+    const date = new Date(time);
     date.setMinutes(date.getMinutes() + duration_minutes);
 
-    // Format back to "hh:mm AM/PM"
-    const newHours = date.getHours() % 12 || 12; // Convert 24-hour format to 12-hour
-    const newMinutes = String(date.getMinutes()).padStart(2, "0"); // Ensure 2-digit minutes
-    const newMeridiem = date.getHours() >= 12 ? "PM" : "AM";
+    return formatTime(date);
+  };
+
+  const formatTime = (time) => {
+    // Format to "hh:mm AM/PM"
+    const newHours = time.getHours() % 12 || 12; // Convert 24-hour format to 12-hour
+    const newMinutes = String(time.getMinutes()).padStart(2, "0"); // Ensure 2-digit minutes
+    const newMeridiem = time.getHours() >= 12 ? "PM" : "AM";
 
     return `${newHours}:${newMinutes} ${newMeridiem}`;
   };
@@ -40,18 +65,18 @@ const Timetable = ({ screenings }) => {
   return (
     <div className='timetable'>
       <h2>Visninger:</h2>
-      {screenings.length > 0 ? (
+      {screeningsByLocation.length > 0 ? (
         <div className='screening-list'>
-          {screenings_by_location.map((screening, index) => (
+          {screeningsByLocation.map((screeningList, index) => (
             <div key={index}>
-              <h3>{screening[0].location}</h3>
+              <h3>{screeningList.name}</h3>
               <ul>
-                {screening.map((screening, index) => (
+                {screeningList.screenings.map((screening, index) => (
                   <li key={index} className='screening'>
                     <div className='screening-time'>
-                      {screening.time}
-                      {" ---- "}
-                      {timeFinished(screening.time, screening.duration)}
+                      {formatTime(new Date(screening.screeningTime))}
+                      {" ---> "}
+                      {getTimeFinished(screening.screeningTime, movie.duration)}
                     </div>
                     <Button Text='Bestill' Size='small' />
                   </li>
