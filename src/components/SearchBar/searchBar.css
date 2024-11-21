@@ -2,14 +2,28 @@
     display: flex;
     justify-content: center;
     margin: 1rem 0;
+    margin-top: 50px;
+    flex-direction: column;
+    align-items: center;
 }
 
 .search-bar input {
     width: 40%;
-    padding: 0.5rem;
-    font-size: 1rem;
+    padding: 1.0rem;
+    font-size: 1.5rem;
     border-radius: 20px;
     border: none;
     outline: none;
-    background: rgba(217, 217, 217, 1);
+    background: rgb(1, 8, 23);
+    font-family: "Jura", sans-serif;
+}
+.search-bar-heading{
+    color: #ffffff;
+    font-size: 2.0rem;
+    font-weight: bold;
+    margin-right: 1rem;
+    font-family: "Jura", sans-serif;
+    text-align: center; /* Center the text */
+    margin-bottom: 20px;
+
 }

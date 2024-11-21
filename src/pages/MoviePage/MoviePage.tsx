@@ -29,7 +29,7 @@ const MoviePage = () => {
 
     setMovie({
       ...data,
-      image: data.images[1]
+      image: data.images[0]
     })
   }
   catch (e) {

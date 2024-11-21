@@ -2,7 +2,18 @@
 .movie-section {
     margin-bottom: 2rem;
 }
-
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: rgb(1, 8, 23); /* Darker version of the page background */
+    color: white; /* Default text color */
+    font-size: 3rem; /* Large text size */
+    font-family: 'Jura', sans-serif;
+    animation: blink 1.5s infinite; /* Blinking animation */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
 .movie-section h2 {
     font-family: 'Jura', sans-serif; /* Apply Jura font */
     font-size: 1.5rem; /* Adjust size as needed */
@@ -10,4 +21,63 @@
     text-align: left;
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
+}
+.page {
+    background-color: #0a0e25; /* Match Figma background color */
+    color: #ffffff;
+    padding: 1rem;
+  }
+  .featured-movie {
+    position: relative;
+    margin: 2rem auto; /* Centers the featured movie */
+    width: 90%; /* Adjusts width */
+    height: 430px; /* Adjust height */
+    border-radius: 10px;
+    overflow: hidden;
+     /* Adds padding inside the featured movie container */
+    display: flex; /* Enables flexbox for easier centering */
+    flex-direction: column; /* Arranges content in a column layout */
+    justify-content: center; /* Vertically centers content */
+    align-items: center; /* Horizontally centers content */
+}
+
+.featured-image {
+    width: 90%; /* Adjusts width of the image */
+    height: 80%; /* Adjusts height of the image */
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    margin-bottom: 1rem; /* Adds some space below the image */
+}
+
+.featured-title {
+    font-size: 2rem; /* Title size */
+    font-weight: bold;
+    color: #ffffff; /* White text color */
+    border-radius: 5px;
+    text-align: center; /* Ensures the title is centered */
+    font-family: 'Jura', sans-serif; 
+}
+
+/* Next Movies Section */
+.next-movies {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.movie-poster-wrapper {
+    text-align: center;
+}
+
+.movie-poster-image {
+    width: 150px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.movie-poster-title {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
 }
