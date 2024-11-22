@@ -74,10 +74,13 @@ const Timetable = ({ screenings, movie }) => {
                 {screeningList.screenings.map((screening, index) => (
                   <li key={index} className='screening'>
                     <div className='screening-time'>
+                      {"Start: "}
                       {formatTime(new Date(screening.screeningTime))}
-                      {" ---> "}
+                      <br />
+                      {" Slutt: "}
                       {getTimeFinished(screening.screeningTime, movie.duration)}
                     </div>
+                    <p className='screening-about'>{screening.about}</p>
                     <Button Text='Bestill' Size='small' />
                   </li>
                 ))}
