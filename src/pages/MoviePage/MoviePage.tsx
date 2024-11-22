@@ -44,6 +44,7 @@ const MoviePage = () => {
     const data = await res.json()
 
     setScreenings(data)
+    console.log(data)
   }
   catch (e) {
   }}

@@ -20,10 +20,10 @@
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #444;
     background-color: #1a1d43;
     padding: 1rem;
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .screening-list h3{
@@ -33,7 +33,7 @@
 }
 
 .screening-time,
-.screening-location {
+.screening-location, p{
     font-size: 1rem;
     color: #cfd2dc;
 }
