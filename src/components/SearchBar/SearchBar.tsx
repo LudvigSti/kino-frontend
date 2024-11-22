@@ -4,7 +4,8 @@ import "./searchBar.css";
 const SearchBar: React.FC = () => {
   return (
     <div className='search-bar'>
-      <input type='text' placeholder='Search' />
+      <p className='search-bar-heading'>Søk Filmer</p>
+      <input type='text' placeholder='Søk' />
     </div>
   );
 };

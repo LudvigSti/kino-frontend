@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import MoviePoster from "../MoviePoster/MoviePoster";
 import { Link } from "react-router-dom";
 import "./movieSection.css";
@@ -17,10 +17,27 @@ interface MovieSectionProps {
 
 const MovieSection: React.FC<MovieSectionProps> = ({ title, movies }) => {
 const showRatings = title === "Highest Rated"
+const scrollContainerRef = useRef<HTMLUListElement>(null);
+
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -300, behavior: "smooth" });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
+    }
+  };
 
   return (
     <div className='movie-section'>
       <h2>{title}</h2>
+     
+      <div className='scroll-wrapper'>
+
+      
       <ul className='movie-list'>
         {movies.map((movie) => (
           <Link to={`/moviepage/${movie.movieId}`} key= {movie.movieId}>
@@ -28,8 +45,8 @@ const showRatings = title === "Highest Rated"
           </Link>
           
         ))}
-        
       </ul>
+      </div>
     </div>
   );
 };
