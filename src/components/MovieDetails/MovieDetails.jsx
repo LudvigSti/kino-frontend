@@ -58,7 +58,7 @@ const MovieDetails = ({ movie }) => {
         <h1>Details</h1>
         <p>
           <strong>Release Date:</strong>{" "}
-          {new Date(movie.releaseYear).toLocaleDateString("en-GB", {
+          {new Date(movie.releaseDate).toLocaleDateString("en-GB", {
             day: "numeric",
             month: "long",
             year: "numeric",

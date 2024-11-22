@@ -7,6 +7,9 @@
     align-items: center;
     flex-direction: column;
     justify-content: center;
+    animation: blink 1.5s infinite;
+    width: 180px; /* Fixed width for the container */
+    box-sizing: border-box; /* Ensures padding doesn’t affect width */
 }
 
 .movie-poster img {
@@ -16,42 +19,19 @@
     padding-bottom: 6px;
     animation: blink 1.5s infinite;
 }
+
 .movie-title {
-    margin-top:0.5rem;
+    margin-top: 0.5rem;
     font-size: 1rem;
     color: #ffffff;
     text-align: center;
     font-weight: 500;
-}
-.movie-poster {
-    margin: 1rem;
-    background-color: #1a1d43;
-    padding: 0.5rem;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-        animation: blink 1.5s infinite;
-
+    max-width: 100%; /* Ensures it stays within the container */
+    word-wrap: break-word; /* Allows breaking long words */
+    overflow-wrap: break-word; /* Ensures breaking for long text */
+    line-height: 1.2rem; /* Adjust line spacing for readability */
 }
 
-.movie-poster img {
-    border-radius: 5px;
-    height: 220px;
-    width: 165px;
-    padding-bottom: 3px;
-}
-
-.movie-title {
-    margin-top: 0.2rem;
-    font-size: 1rem;
-    color: #ffffff;
-    text-align: center;
-    font-weight: 500;
-}
-
-/* Rating container with star */
 .movie-rating {
     margin-top: 0.5rem;
     display: flex;
@@ -62,11 +42,11 @@
     font-weight: bold;
 }
 
-/* Star icon style */
 .star-icon {
     margin-right: 0.3rem;
     font-size: 1rem; /* Matches the rating text */
 }
-.rating-text{
-    color:white;
+
+.rating-text {
+    color: white;
 }
