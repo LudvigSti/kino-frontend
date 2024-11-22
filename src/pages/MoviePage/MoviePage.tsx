@@ -51,7 +51,7 @@ const MoviePage = () => {
   }, [id])
 
   if (!movie) {
-    return <div className="loading-screen">Loading...</div>; 
+    return <div className="loading-screen">Cinemas</div>; 
   }
 
   return (

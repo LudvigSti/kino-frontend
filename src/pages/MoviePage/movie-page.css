@@ -8,3 +8,26 @@
     font-size: large;
     background-color: rgba(2, 10, 30, 1);
 }
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: rgb(1, 8, 23); /* Darker version of the page background */
+    color: white; /* Default text color */
+    font-size: 3rem; /* Large text size */
+    font-family: 'Arial', sans-serif;
+    animation: blink 1.5s infinite; /* Blinking animation */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Keyframes for blinking text */
+  @keyframes blink {
+    0%, 100% {
+      color: white;
+    }
+    50% {
+      color: gray;
+    }
+  }
+  
