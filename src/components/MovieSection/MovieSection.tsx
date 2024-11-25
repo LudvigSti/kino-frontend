@@ -36,8 +36,6 @@ const scrollContainerRef = useRef<HTMLUListElement>(null);
       <h2>{title}</h2>
      
       <div className='scroll-wrapper'>
-
-      
       <ul className='movie-list'>
         {movies.map((movie) => (
           <Link to={`/moviepage/${movie.movieId}`} key= {movie.movieId}>
