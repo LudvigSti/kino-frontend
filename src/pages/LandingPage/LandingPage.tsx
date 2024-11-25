@@ -14,7 +14,7 @@ interface Movie {
   duration: number;
   director: string;
   image: string;
-  releaseYear: Date; 
+  releaseDate: Date; 
   images: string[];
 
 }
@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
         const processedData = data.map(movie => ({
           ...movie,  //Loads movies with only the first image in the image array
           image: movie.images[0]
-        }))  .sort((a, b) => new Date(b.releaseYear).getTime() - new Date(a.releaseYear).getTime());
+        }))  .sort((a, b) => new Date(b.releaseDate).getDate() - new Date(a.releaseDate).getDate());
 
         setFeaturedMovie(processedData[0]); // The most recent movie       
 
