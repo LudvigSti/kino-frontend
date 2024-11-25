@@ -77,9 +77,10 @@ const AppHeader: React.FC = () => {
       <h1 className='home-button' onClick={() => navigate('/')}>Cinemas</h1>
       <nav>
         <ul>
-          <li>
-            <a href='#filmer'>Filmer</a>
-          </li>
+        <li>
+          <Link to="/filmer">Filmer</Link>
+          </li> 
+
           <li>
             <a href='#kinoer'>Kinoer</a>
           </li>
@@ -104,6 +105,7 @@ const AppHeader: React.FC = () => {
                 <Link to='/register'>Registrer</Link>
               </li>
             </>
+            
           )}
         </ul>
       </nav>

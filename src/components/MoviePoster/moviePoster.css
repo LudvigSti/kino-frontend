@@ -14,10 +14,9 @@
 
 .movie-poster img {
     border-radius: 5px;
-    height: 220px;
-    width: 165px;
+    height: 100%;/* height: 220px;  */
+    width: 10%; /*width: 165px;*/
     padding-bottom: 6px;
-    animation: blink 1.5s infinite;
 }
 
 .movie-title {
