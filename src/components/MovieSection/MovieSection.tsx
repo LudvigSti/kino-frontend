@@ -1,5 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import MoviePoster from "../MoviePoster/MoviePoster";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./movieSection.css";
 
@@ -12,10 +13,12 @@ interface Movie {
 
 interface MovieSectionProps {
   title: string;
-  movies: Movie[];
+  movieList: Movie[];
 }
 
-const MovieSection: React.FC<MovieSectionProps> = ({ title, movies }) => {
+const MovieSection: React.FC<MovieSectionProps> = ({ title, movieList }) => {
+
+const [movies, setNewMovies] = useState<Movie[]>(movieList)
 const showRatings = title === "Highest Rated"
 const scrollContainerRef = useRef<HTMLUListElement>(null);
 
@@ -30,6 +33,11 @@ const scrollContainerRef = useRef<HTMLUListElement>(null);
       scrollContainerRef.current.scrollBy({ left: 300, behavior: "smooth" });
     }
   };
+
+  useEffect(() => {
+    setNewMovies(movieList);
+    console.log(movies);
+  }, [movieList]);
 
   return (
     <div className='movie-section'>

@@ -25,7 +25,6 @@
 .page {
     background-color: #0a0e25; /* Match Figma background color */
     color: #ffffff;
-    padding: 1rem;
   }
   .featured-movie {
     position: relative;
