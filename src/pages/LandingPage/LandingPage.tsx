@@ -83,11 +83,10 @@ const LandingPage: React.FC = () => {
         </div>
         </Link>
       )}
-            <SearchBar onChange={(e) => {
+      <SearchBar onChange={(e) => {
         setSearch(e.target.value);
         }} searchValue={search}/>
-      <div className="next-movies">
-        
+      <div className="next-movies">   
       </div>
       <MovieSection title='New Movies' movieList={newMovies} />
       <MovieSection title='Popular Movies' movieList={popularMovies} />

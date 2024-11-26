@@ -80,3 +80,7 @@
     font-weight: bold;
     color: #ffffff;
 }
+
+.filter-section, .sort-section {
+    font-family: 'Jura', sans-serif;
+}
