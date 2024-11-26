@@ -36,7 +36,6 @@ const scrollContainerRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
     setNewMovies(movieList);
-    console.log(movies);
   }, [movieList]);
 
   return (
