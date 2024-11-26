@@ -2,7 +2,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-x:  auto ; /* Enable horizontal scrolling */
+    
     padding: 0.5rem 0; /* Adjust padding if needed */
   }
   
