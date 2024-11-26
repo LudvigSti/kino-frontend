@@ -60,10 +60,10 @@ const Movies: React.FC = () => {
         <div className="filmer-page">
           <AppHeader />
           <div className="filmer-sections">
-            <MovieSection title="New Movies" movies={newMovies} />
-            <MovieSection title="Comeback Movies" movies={returnedMovies} />
-            <MovieSection title="Highest Rated" movies={highestRated} />
-            <MovieSection title="Family Movies" movies={familyMovies} />
+            <MovieSection title="New Movies" movieList={newMovies} />
+            <MovieSection title="Comeback Movies" movieList={returnedMovies} />
+            <MovieSection title="Highest Rated" movieList={highestRated} />
+            <MovieSection title="Family Movies" movieList={familyMovies} />
           </div>
         </div>
       );
