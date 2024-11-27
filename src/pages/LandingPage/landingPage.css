@@ -29,8 +29,7 @@
   .featured-movie {
     position: relative;
     margin: 2rem auto; /* Centers the featured movie */
-    width: 90%; /* Adjusts width */
-    height: 430px; /* Adjust height */
+   
     border-radius: 10px;
     overflow: hidden;
      /* Adds padding inside the featured movie container */
