@@ -3,7 +3,6 @@ import MovieSection from "../../components/MovieSection/MovieSection";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import "./movies.css";
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { Console } from 'console';
 
 interface Movie {
   movieId: number;
@@ -95,9 +94,8 @@ const Movies: React.FC = () => {
 
     const fetchMovies = async () => {
         try {
-            const res = await fetch("https://localhost:5001/movie")
+            const res = await fetch("https://localhost:5001/movie");
             const data: Movie[] = await res.json();
-            ;
 
 
             const processedData = data.map(movie => ({

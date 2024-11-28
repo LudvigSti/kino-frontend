@@ -77,3 +77,15 @@
     }
   }
   
+  .like-section{
+    display: flex;
+    text-align: left;
+    padding-top: 1rem;
+    align-items: center;
+    justify-content: right;
+  }
+
+  .like-section p {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+  }
