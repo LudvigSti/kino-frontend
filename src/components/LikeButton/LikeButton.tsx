@@ -30,9 +30,7 @@ const LikeButton: React.FC<LikeButtonProps> = ({ movie }) => {
     }, [movie.title]);
 
     useEffect(() => {
-        console.log('liked', liked);
         localStorage.setItem(`likes-${movie.title}`, liked.toString());
-        console.log('localStorage', localStorage);
     }, [liked]);
 
     return (
