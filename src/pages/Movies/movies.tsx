@@ -32,7 +32,7 @@ const Movies: React.FC = () => {
 
     //Filter options
     const genres = ["All","Action", "Adventure", "Comedy", "Crime", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Romance", "Science Fiction", "Thriller", "Western"]
-    const ageRatings = ["All", "7", "12", "15", "18"]
+    const ageRatings = ["All","0", "7", "12", "15", "18"]
     const durations = ["All", "0-60", "60-120", "120-180", "180-240", "240-300", "300-360"]
     const ratings = ["All", "0-2", "2-4", "4-6", "7-10"]
 
@@ -79,10 +79,10 @@ const Movies: React.FC = () => {
                 setFilteredMovies(sortedMovies.sort((a, b) => a.title.localeCompare(b.title)))
                 break;
             case "Rating":
-                setFilteredMovies(sortedMovies.sort((a, b) => a.rating - b.rating))
+                setFilteredMovies(sortedMovies.sort((a, b) => b.rating - a.rating))
                 break;
             case "Release Date":
-                setFilteredMovies(sortedMovies.sort((a, b) => new Date(a.releaseDate.split("-")[0]).getTime() - new Date(b.releaseDate.split("-")[0]).getTime()))
+                setFilteredMovies(sortedMovies.sort((a, b) => new Date(b.releaseDate.split("-")[0]).getTime() - new Date(a.releaseDate.split("-")[0]).getTime() ))
                 break;
             }
     }
@@ -183,7 +183,7 @@ const Movies: React.FC = () => {
             key ={movie.movieId}
             image= {movie.image}
             title={movie.title}
-            rating={movie.rating} 
+            rating={undefined} 
             />
             ))}
           </div>

@@ -35,23 +35,32 @@ const LandingPage: React.FC = () => {
       try {
         const res = await fetch("https://localhost:5001/movie");
         const data: Movie[] = await res.json();
-        const now = new Date()
-        const twoMonthsAgo = new Date();
-        twoMonthsAgo.setMonth(now.getMonth() - 2);
+        const now = new Date(); // Current date (today)
+        const twoMonthsAgo = new Date(now);
+        twoMonthsAgo.setMonth(now.getMonth() - 2); // Set the date to two months ago
         
-        const processedData = data.map(movie => ({
-          ...movie,  //Loads movies with only the first image in the image array
-          image: movie.images[0]
-        })).sort((a, b) => new Date(b.releaseDate).getDate() - new Date(a.releaseDate).getDate());
-
-        setFeaturedMovie(processedData[0]); // The most recent movie       
-        setMovies(processedData)
-        setNewMovies(processedData.filter(movie => new Date(movie.releaseDate) >= twoMonthsAgo ))
-        setHighestRated(processedData.filter((movie: Movie) => movie.rating >= 7 ))
-        setReturnedMovies(processedData.filter(movie => new Date(movie.releaseDate).getFullYear() < now.getFullYear() ))
-        setFamilyMovies(processedData.filter(movie => movie.ageRating <= 12))
-
-
+        // Create the processed data (with images and sorting)
+        const processedData = data
+          .map(movie => ({
+            ...movie, // Loads movies with only the first image in the image array
+            image: movie.images[0]
+          }))
+          .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); 
+          
+        setFeaturedMovie(processedData[0]);
+        setMovies(processedData);
+        setNewMovies(processedData.filter(movie => {
+          const releaseDate = new Date(movie.releaseDate); 
+          return releaseDate >= twoMonthsAgo && releaseDate <= now; 
+        }));
+        
+        setHighestRated(processedData.filter((movie: Movie) => movie.rating >= 7));
+        setReturnedMovies(processedData.filter(movie => {
+          const releaseDate = new Date(movie.releaseDate); 
+          return releaseDate.getFullYear() < now.getFullYear() - 2;
+        }));
+        setFamilyMovies(processedData.filter(movie => movie.ageRating <= 12));
+        
       } catch (e) {
         console.error(e);
       } finally{
