@@ -13,10 +13,18 @@
 
 .filter-section {
     display: flex;
-    width: 95%;
-    justify-content: space-between;
+    flex:auto;
+    gap: 5px;
     flex-wrap: wrap;
-    align-items: center;
+}
+.all-films-section {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+  gap: 1.5rem; /* Space between items */
+  justify-items: center; /* Center grid items horizontally */
+  margin-top: 1.5rem;
+  background-color: rgb(1, 8, 23)
 }
 
 .filter-section p, label{

@@ -4,6 +4,7 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import "./movies.css";
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { Console } from 'console';
+import MoviePoster from '../../components/MoviePoster/MoviePoster';
 
 interface Movie {
   movieId: number;
@@ -30,10 +31,10 @@ const Movies: React.FC = () => {
     const [sortMoviesOption, setSortMovies] = useState<string>("Title")
 
     //Filter options
-    const genres = ["Action", "Adventure", "Comedy", "Crime", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Romance", "Science Fiction", "Thriller", "Western"]
+    const genres = ["All","Action", "Adventure", "Comedy", "Crime", "Drama", "Fantasy", "Historical", "Horror", "Mystery", "Romance", "Science Fiction", "Thriller", "Western"]
     const ageRatings = ["All", "7", "12", "15", "18"]
     const durations = ["All", "0-60", "60-120", "120-180", "180-240", "240-300", "300-360"]
-    const ratings = ["All", "0-2", "2-4", "4-6", "6-8"]
+    const ratings = ["All", "0-2", "2-4", "4-6", "7-10"]
 
     //Sorting options
     const sortOptions = ["Title", "Rating", "Release Date"]
@@ -97,8 +98,6 @@ const Movies: React.FC = () => {
         try {
             const res = await fetch("https://localhost:5001/movie")
             const data: Movie[] = await res.json();
-            ;
-
 
             const processedData = data.map(movie => ({
                 ...movie,
@@ -177,8 +176,15 @@ const Movies: React.FC = () => {
                     {sortOptions.map(option => <option key={option} value={option}>{option}</option>)}
                 </select>
             </div>
-          <div className="filmer-sections">
-            <MovieSection title="All Movies" movieList={filteredMovies} />
+          <div className="all-films-section">
+            {filteredMovies.map( (movie) => 
+            (<MoviePoster 
+            key ={movie.movieId}
+            image= {movie.image}
+            title={movie.title}
+            rating={movie.rating} 
+            />
+            ))}
           </div>
         </div>
       );
