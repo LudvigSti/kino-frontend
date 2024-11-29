@@ -25,13 +25,11 @@
 .page {
     background-color: #0a0e25; /* Match Figma background color */
     color: #ffffff;
-    padding: 1rem;
   }
   .featured-movie {
     position: relative;
     margin: 2rem auto; /* Centers the featured movie */
-    width: 90%; /* Adjusts width */
-    height: 430px; /* Adjust height */
+   
     border-radius: 10px;
     overflow: hidden;
      /* Adds padding inside the featured movie container */
@@ -80,4 +78,8 @@
     font-size: 1rem;
     font-weight: bold;
     color: #ffffff;
+}
+
+.filter-section, .sort-section {
+    font-family: 'Jura', sans-serif;
 }

@@ -14,35 +14,53 @@ interface Movie {
   duration: number;
   director: string;
   image: string;
-  releaseYear: Date; 
+  releaseDate: Date; 
   images: string[];
 
 }
 
 const LandingPage: React.FC = () => {
+  const [movies, setMovies] = useState<Movie[]>([]);
   const [newMovies, setNewMovies] = useState<Movie[]>([])
-  const [popularMovies,setPopularMovies] = useState<Movie[]>([])
   const [highestRated,setHighestRated] = useState<Movie[]>([])
   const [featuredMovie, setFeaturedMovie] = useState<Movie | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  
+  const [search, setSearch] = useState<string>('');
+  const [familyMovies, setFamilyMovies] = useState<Movie[]>([])
+  const [returnedMovies, setReturnedMovies] = useState<Movie[]>([])
+
+
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const res = await fetch("https://localhost:5001/movie");
         const data: Movie[] = await res.json();
+        const now = new Date(); // Current date (today)
+        const twoMonthsAgo = new Date(now);
+        twoMonthsAgo.setMonth(now.getMonth() - 2); // Set the date to two months ago
         
-        const processedData = data.map(movie => ({
-          ...movie,  //Loads movies with only the first image in the image array
-          image: movie.images[0]
-        }))  .sort((a, b) => new Date(b.releaseYear).getTime() - new Date(a.releaseYear).getTime());
-
-        setFeaturedMovie(processedData[0]); // The most recent movie       
-
-        setNewMovies(processedData);
-        setPopularMovies(processedData);
-        setHighestRated(processedData.filter((movie: Movie) => movie.rating >= 7 ))
-
+        // Create the processed data (with images and sorting)
+        const processedData = data
+          .map(movie => ({
+            ...movie, // Loads movies with only the first image in the image array
+            image: movie.images[0]
+          }))
+          .sort((a, b) => new Date(b.releaseDate).getTime() - new Date(a.releaseDate).getTime()); 
+          
+        setFeaturedMovie(processedData[0]);
+        setMovies(processedData);
+        setNewMovies(processedData.filter(movie => {
+          const releaseDate = new Date(movie.releaseDate); 
+          return releaseDate >= twoMonthsAgo && releaseDate <= now; 
+        }));
+        
+        setHighestRated(processedData.filter((movie: Movie) => movie.rating >= 7));
+        setReturnedMovies(processedData.filter(movie => {
+          const releaseDate = new Date(movie.releaseDate); 
+          return releaseDate.getFullYear() < now.getFullYear() - 2;
+        }));
+        setFamilyMovies(processedData.filter(movie => movie.ageRating <= 12));
+        
       } catch (e) {
         console.error(e);
       } finally{
@@ -51,27 +69,46 @@ const LandingPage: React.FC = () => {
     };
     fetchMovies();
   }, []);
+
+  useEffect(() => {
+    onSearchbarChange();
+  }, [search])
+  
+  const onSearchbarChange = () => {
+    if(movies.length > 0){
+      setNewMovies(movies.filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase())));
+      setReturnedMovies(movies.filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase())));
+      setHighestRated(movies.filter((movie: Movie) => movie.title.toLowerCase().includes(search.toLowerCase())));
+    }
+  }
+
+
   if (loading) {
     return <div className="loading-screen">Cinemas</div>; 
   }
   return (
     <div className='page'>
-      <AppHeader />
-      <SearchBar />
-      {featuredMovie && (
-        <Link to={`/moviepage/${featuredMovie.movieId}`}> 
+      <AppHeader /><SearchBar onChange={(e) => {
+        setSearch(e.target.value);
+        }} searchValue={search}/>
+      {search === "" && featuredMovie && (
+        <Link to={`/moviepage/${featuredMovie.movieId}`}>
+        
         <div className="featured-movie">
           <img className="featured-image" src={featuredMovie.images[1]} alt={featuredMovie.title} />
           <h2 className="featured-title">SE {featuredMovie.title.toUpperCase()} NÅ!</h2>
         </div>
         </Link>
       )}
+            
       <div className="next-movies">
         
       </div>
-      <MovieSection title='New Movies' movies={newMovies} />
-      <MovieSection title='Popular Movies' movies={popularMovies} />
-      <MovieSection title='Highest Rated' movies={highestRated} />
+      <MovieSection title='New Movies' movieList={newMovies} />
+      <MovieSection title='Returned Movies' movieList={returnedMovies} />
+      <MovieSection title='Highest Rated' movieList={highestRated} />
+      <MovieSection title="Family Movies" movieList={familyMovies} />
+
     </div>
   );
 };

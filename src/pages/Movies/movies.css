@@ -1,0 +1,54 @@
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+    background-color: rgb(1, 8, 23); /* Darker version of the page background */
+    color: white; /* Default text color */
+    font-size: 3rem; /* Large text size */
+    font-family: 'Jura', sans-serif;
+    animation: blink 1.5s infinite; /* Blinking animation */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  }
+
+.filter-section {
+    display: flex;
+    flex:auto;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+.all-films-section {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Responsive columns */
+  gap: 1.5rem; /* Space between items */
+  justify-items: center; /* Center grid items horizontally */
+  margin-top: 1.5rem;
+  background-color: rgb(1, 8, 23)
+}
+
+.filter-section p, label{
+    margin: 1rem;
+    font-size: 1.5rem;
+    color: #ffffff;
+    text-align: left;
+    font-weight: 500;
+}
+
+.sort-section{
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.filter-section select, .sort-section select{
+    margin: 0.2rem;
+    font-size: 1.3rem;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 400;
+    background-color: #1a1d43;
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    padding: 0.1rem;
+    width: 8rem;
+}

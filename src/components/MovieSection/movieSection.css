@@ -1,72 +1,110 @@
 .scroll-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-    overflow-x: auto; /* Enable horizontal scrolling */
-    padding: 0.5rem 0; /* Adjust padding if needed */
-  }
-  
-  .movie-list {
-    background-color: rgb(1, 7, 20);
-    display: flex;
-    gap: 1rem;
-    padding: 0.5rem;
-    margin: 0;
-    list-style: none; /* Ensure no bullets */
-    scroll-behavior: smooth;
-  }
-  
-  .movie-list::-webkit-scrollbar {
-    display: none; /* Hide the scrollbar */
-  }
-  
-  .movie-list li {
-    /* Ensure list items don't cause issues with the layout */
-    list-style: none;
-  }
-  
-  .movie-poster {
-    margin: 1rem;
-    background-color: #1a1d43;
-    padding: 0.5rem;
-    border-radius: 5px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
-  }
-  
-  .movie-poster img {
-    border-radius: 5px;
-    height: 220px;
-    width: 165px;
-    padding-bottom: 3px;
-  }
-  
-  .movie-title {
-    margin-top: 0.2rem;
-    font-size: 1rem;
-    color: #ffffff;
-    text-align: center;
-    font-weight: 500;
-  }
-  
-  .movie-rating {
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    color: #f4c430;
-    font-weight: bold;
-  }
-  
-  .star-icon {
-    margin-right: 0.3rem;
-    font-size: 1rem;
-  }
-  
-  .rating-text {
-    color: white;
-  }
-  
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  overscroll-behavior-inline: contain;
+}
+.movie-section {
+  position: relative;
+  margin-bottom: 2rem; /* Add spacing between sections */
+  padding: 0 1rem; /* Add padding to the section */
+}
+
+.movie-section h2 {
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem; /* Spacing below the title */
+}
+
+
+.movie-list {
+  background-color: rgb(1, 7, 20);
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  list-style: none;
+  scroll-behavior: smooth;
+  white-space: nowrap;
+  overflow-x: auto;
+}
+
+.movie-list::-webkit-scrollbar {
+  display: none;
+}
+
+.movie-poster {
+  margin: 1rem;
+  background-color: #1a1d43;
+  padding: 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.movie-poster img {
+  border-radius: 5px;
+  height: 220px;
+  width: 165px;
+  padding-bottom: 3px;
+}
+
+.movie-title {
+  margin-top: 0.2rem;
+  font-size: 1rem;
+  color: #ffffff;
+  text-align: center;
+  font-weight: 500;
+}
+
+.movie-rating {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #f4c430;
+  font-weight: bold;
+}
+
+.star-icon {
+  margin-right: 0.3rem;
+  font-size: 1rem;
+}
+
+.rating-text {
+  color: white;
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  z-index: 10;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.scroll-wrapper:hover .scroll-button {
+  opacity: 1;
+}
+
+.left-button {
+  left: -40px;
+  width: 20px;
+}
+
+.right-button {
+  right: -40px;
+  width: 20px;
+}
