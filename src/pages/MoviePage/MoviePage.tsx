@@ -4,7 +4,8 @@ import MovieDetails from "../../components/MovieDetails/MovieDetails";
 import TimeTable from "../../components/TimeTable/TimeTable";
 import "./movie-page.css";
 import { useEffect, useState } from "react";
-import Button from "../../components/Button/Button";
+import { HTTPS_API_BASE_URL} from '../../apiConfig'
+
 
 interface Movie {
   movieId: number;
@@ -25,7 +26,8 @@ const MoviePage = () => {
   useEffect( ()=> {
     const fetchMovieDetails = async () => { 
       try {
-    const res = await fetch(`https://localhost:5001/movie/${id}`);
+        
+    const res = await fetch(`${HTTPS_API_BASE_URL}/movie/${id}`);
     const data = await res.json()
 
     setMovie({
@@ -41,7 +43,7 @@ const MoviePage = () => {
   useEffect( ()=> {
     const fetchScreenings = async () => { 
       try {
-    const res = await fetch(`https://localhost:5001/screening/getScreeningsByMovieId/${id}`);
+    const res = await fetch(`${HTTPS_API_BASE_URL}/screening/getScreeningsByMovieId/${id}`);
     const data = await res.json()
 
     setScreenings(data)

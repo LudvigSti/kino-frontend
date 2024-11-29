@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './login.css';
+import {HTTP_API_BASE_URL} from '../../apiConfig'
+
 
 interface FormData {
   email: string;
@@ -25,7 +27,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/user/login', {
+      const response = await fetch(`${HTTP_API_BASE_URL}/user/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
