@@ -5,6 +5,7 @@ import "./movies.css";
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { Console } from 'console';
 import MoviePoster from '../../components/MoviePoster/MoviePoster';
+import { Link } from 'react-router-dom';
 
 interface Movie {
   movieId: number;
@@ -18,7 +19,7 @@ interface Movie {
   images: string[];
 }
 
-const Movies: React.FC = () => {
+const Movies: React.FC = (movie) => {
     //Movies from API call
     const [allMovies, setAllMovies] = useState<Movie[]>([])
 
@@ -179,12 +180,15 @@ const Movies: React.FC = () => {
             </div>
           <div className="all-films-section">
             {filteredMovies.map( (movie) => 
-            (<MoviePoster 
+            (
+            <Link to={`/moviepage/${movie.movieId}`}> 
+            <MoviePoster 
             key ={movie.movieId}
             image= {movie.image}
             title={movie.title}
             rating={movie.rating} 
             />
+            </Link>
             ))}
           </div>
         </div>
