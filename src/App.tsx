@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Profile from './pages/Profile/profile';
 import MoviePage from './pages/MoviePage/MoviePage';
 import Register from './pages/Register/Register';
+import BuyTickets from './pages/BuyTickets/BuyTickets';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/moviepage/:id" element={<MoviePage />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/buytickets" element={<BuyTickets />} />
         </Routes>
     </>
   );
