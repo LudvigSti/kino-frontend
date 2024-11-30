@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import MovieSection from "../../components/MovieSection/MovieSection";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import "./movies.css";
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { Console } from 'console';
 import MoviePoster from '../../components/MoviePoster/MoviePoster';
 import { Link } from 'react-router-dom';
+import { HTTPS_API_BASE_URL} from '../../apiConfig'
+
 
 interface Movie {
   movieId: number;
@@ -97,7 +97,7 @@ const Movies: React.FC = (movie) => {
 
     const fetchMovies = async () => {
         try {
-            const res = await fetch("https://localhost:5001/movie");
+            const res = await fetch(`${HTTPS_API_BASE_URL}/movie`);
             const data: Movie[] = await res.json();
 
 

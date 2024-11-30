@@ -3,7 +3,8 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import Button from "../../components/Button/Button";
 import "./profile.css";
 import Cookies from 'js-cookie';
-import { profileEnd } from 'console';
+import {HTTP_API_BASE_URL} from '../../apiConfig'
+
 
 interface Profile {
   profileId: number | null;
@@ -34,7 +35,7 @@ const Profile: React.FC = () => {
     const fetchProfile = async () => {
       if (user) {
         try {
-          const response = await fetch(`http://localhost:5000/profile/getProfileByEmail?email=${user}`, {
+          const response = await fetch(`${HTTP_API_BASE_URL}/profile/getProfileByEmail?email=${user}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
@@ -67,7 +68,7 @@ const Profile: React.FC = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:5000/profile/${profile.profileId}`, {
+      const response = await fetch(`${HTTP_API_BASE_URL}/profile/${profile.profileId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'

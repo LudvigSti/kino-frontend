@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './register.css';
+import {HTTP_API_BASE_URL} from '../../apiConfig'
 
 interface FormData {
   username: string;
@@ -95,9 +96,9 @@ const Register: React.FC = () => {
     if (!validateFormData()) {
       return;
     }
-
+    console.log(HTTP_API_BASE_URL)
     try {
-      const response = await fetch('http://localhost:5000/user', {
+      const response = await fetch(`${HTTP_API_BASE_URL}/user`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -130,7 +131,7 @@ const Register: React.FC = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/profile/CreateUserProfile', {
+      const response = await fetch(`${HTTP_API_BASE_URL}/profile/CreateUserProfile`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

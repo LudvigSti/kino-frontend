@@ -4,6 +4,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import "./landingPage.css";
 import { Link } from 'react-router-dom';
+import { HTTPS_API_BASE_URL} from '../../apiConfig'
+
+
 
 
 interface Movie {
@@ -33,7 +36,7 @@ const LandingPage: React.FC = () => {
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const res = await fetch("https://localhost:5001/movie");
+        const res = await fetch(`${HTTPS_API_BASE_URL}/movie`);
         const data: Movie[] = await res.json();
         const now = new Date(); // Current date (today)
         const twoMonthsAgo = new Date(now);
