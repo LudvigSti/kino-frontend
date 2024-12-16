@@ -83,3 +83,7 @@
 .filter-section, .sort-section {
     font-family: 'Jura', sans-serif;
 }
+
+.form-group {
+    color: black;
+}

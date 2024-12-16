@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 import './appHeader.css';
 
-interface UserProfile {
+export interface UserProfile {
   firstName: string;
   lastName: string;
   email: string;

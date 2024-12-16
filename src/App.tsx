@@ -3,7 +3,7 @@ import './App.css';
 import LandingPage from './pages/LandingPage/LandingPage';
 import Login from './pages/Login/Login';
 import Profile from './pages/Profile/profile';
-import MoviePage from './pages/MoviePage/MoviePage';
+import MoviePage from './pages/SingleMoviePage/MoviePage';
 import Register from './pages/Register/Register';
 import BuyTickets from './pages/BuyTickets/BuyTickets';
 import Movies from './pages/Movies/movies';
