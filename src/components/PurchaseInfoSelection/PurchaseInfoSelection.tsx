@@ -1,16 +1,20 @@
 import Cookies from 'js-cookie';
-import UserProfile from '../../pages/Profile/profile';
+import { userProfile } from '../../pages/Profile/profile';
 import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './purchase-info-selection.css';
 
-const PurchaseInfoSelection = () => {
+interface PurchaseInfoSelectionProps {
+    onContinueClick: ( profile: userProfile ) => void;
+}
+
+const PurchaseInfoSelection = ({ onContinueClick }: PurchaseInfoSelectionProps) => {
     const userCookie = Cookies.get('user');
     const user = userCookie ? JSON.parse(userCookie) : null;
-    const [profile, setProfile] = useState<UserProfile>({
+    const [profile, setProfile] = useState<userProfile>({
         profileId: null,
         firstName: "",
         lastName: "",
-        email: user,
+        email: "",
         dateOfBirth: "",
         points: 0,
         icon: "",
@@ -31,8 +35,15 @@ const PurchaseInfoSelection = () => {
 
                 if (response.ok) {
                     const profileData = await response.json();
-                    setProfile(profileData);
-                    setIsLoaded(true);
+                    setProfile({
+                        profileId: profileData.profileId,
+                        firstName: profileData.firstName,
+                        lastName: profileData.lastName,
+                        email: user,
+                        dateOfBirth: profileData.dateOfBirth,
+                        points: profileData.points,
+                        icon: profileData.icon,
+                    });
                 } else {
                     console.error('Failed to fetch profile', user);
                 }
@@ -42,6 +53,7 @@ const PurchaseInfoSelection = () => {
             }
         };
         fetchProfile();
+        setIsLoaded(true);
     }, []);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -49,13 +61,63 @@ const PurchaseInfoSelection = () => {
         setProfile({ ...profile, [name]: value });
     };
 
-    const onNextClick = async (event: FormEvent<HTMLFormElement>) => {
-        alert('Ticket(s) bought for:' + JSON.stringify(profile));
+    const onNextClick = (event: FormEvent<HTMLFormElement>) => {
+        onContinueClick(profile);
     };
 
     if (!user) {
-        return <div>User form</div>;
+        return ( 
+            <div className='profile-info'>
+                <h1>Skriv inn brukerinfo</h1>
+                    <form className='profile-form' onSubmit={onNextClick}>
+                    <div className='form-group'>
+                        <label htmlFor='email'>Email</label>
+                        <input
+                            type='text'
+                            name='email'
+                            id='email'
+                            value={profile.email}
+                            onChange={onInputChange}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='firstName'>First Name</label>
+                        <input
+                            type='text'
+                            name='firstName'
+                            id='firstName'
+                            value={profile.firstName}
+                            onChange={onInputChange}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='lastName'>Last Name</label>
+                        <input
+                            type='text'
+                            name='lastName'
+                            id='lastName'
+                            value={profile.lastName}
+                            onChange={onInputChange}
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <label htmlFor='dateOfBirth'>Date of Birth</label>
+                        <input
+                            type='date'
+                            name='dateOfBirth'
+                            id='dateOfBirth'
+                            value={profile.dateOfBirth}
+                            onChange={onInputChange}
+                        />
+                    </div>
+                    <p>Betalingsinfo kommer snart....</p>
+                    <button type='submit'>Kjøp billetter</button>
+                </form>
+            </div>
+        );
     }
+
+    console.log(profile);
 
     return (
         <div className='profile-info'>
@@ -68,7 +130,7 @@ const PurchaseInfoSelection = () => {
                         type='text'
                         name='email'
                         id='email'
-                        value={user}
+                        value={profile.email}
                         onChange={onInputChange}
                     />
                 </div>

@@ -6,6 +6,8 @@ import "../TimeTable/time-table.css";
 import TicketSelection from "../TicketSelection/TicketSelection";
 import Modal from "../Modal/Modal";
 import PurchaseInfoSelection from "../PurchaseInfoSelection/PurchaseInfoSelection";
+import { userProfile } from "../../pages/Profile/profile";
+import Reciept from "../Reciept/Reciept";
 
 interface TimeTableItemProps {
   screening: Screening;
@@ -13,11 +15,13 @@ interface TimeTableItemProps {
 
 const TimeTableItem = ( { screening }: TimeTableItemProps) => {
     const [isTicketModalOpen, setIsTicketModalOpen] = useState(false);
-    const [ticketCount, setTicketCount] = useState(1);
-
     const [isSeatModalOpen, setIsSeatModalOpen] = useState(false);
     const [isPurchaseInfoSelectionModalOpen, setIsPurchaseInfoSelectionModalOpen] = useState(false);
+    const [isRecieptModalOpen, setIsRecieptModalOpen] = useState(false);
+
+    const [ticketCount, setTicketCount] = useState(1);
     const [selectedSeats, setSelectedSeat] = useState<number []>([])
+    const [selectedProfile, setSelectedProfile] = useState<userProfile | null>(null);
 
     const getTimeFinished = (time: string, duration_minutes: number): string => {
         const date = new Date(time);
@@ -51,6 +55,16 @@ const TimeTableItem = ( { screening }: TimeTableItemProps) => {
         setIsPurchaseInfoSelectionModalOpen(true);
     }
 
+    const handleProfileSelected = ( profile: userProfile) => {
+        setSelectedProfile(profile);
+        setIsPurchaseInfoSelectionModalOpen(false);
+        setIsRecieptModalOpen(true);
+    }
+
+    const closeReciept = () => {
+        setIsRecieptModalOpen(false);
+    }
+
     return (
         <div className="screening">
             <div className='screening-time'>
@@ -62,15 +76,18 @@ const TimeTableItem = ( { screening }: TimeTableItemProps) => {
             </div>
             <p className='screening-about'>{screening.about}</p>
             <Button Text='Bestill' Size='small' onClick={openTicketModal}/>
-            <Modal isOpen={isTicketModalOpen} onClose={() => setIsTicketModalOpen(false)}>
-                <TicketSelection screening={screening} onContinueClick={handleTicketsSelected}/>
-            </Modal>
-            <Modal isOpen={isSeatModalOpen} onClose={() => setIsSeatModalOpen(false)}>
-                <SeatSelection ticketCount={ticketCount} onContinueClick={handleSeatsSelected}/>
-            </Modal>
-            <Modal isOpen={isPurchaseInfoSelectionModalOpen} onClose={() => setIsPurchaseInfoSelectionModalOpen(false)}>
-                <PurchaseInfoSelection />
-            </Modal>
+                <Modal isOpen={isTicketModalOpen} onClose={() => setIsTicketModalOpen(false)}>
+                    <TicketSelection screening={screening} onContinueClick={handleTicketsSelected}/>
+                </Modal>
+                <Modal isOpen={isSeatModalOpen} onClose={() => setIsSeatModalOpen(false)}>
+                    <SeatSelection ticketCount={ticketCount} onContinueClick={handleSeatsSelected}/>
+                </Modal>
+                <Modal isOpen={isPurchaseInfoSelectionModalOpen} onClose={() => setIsPurchaseInfoSelectionModalOpen(false)}>
+                    <PurchaseInfoSelection onContinueClick={handleProfileSelected}/>
+                </Modal>
+                <Modal isOpen={isRecieptModalOpen} onClose={() => setIsRecieptModalOpen(false)}> 
+                    <Reciept userProfile={selectedProfile} screening={screening} seats={selectedSeats} close={closeReciept}/>
+                </Modal>
         </div>
     );
 };

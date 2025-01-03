@@ -8,6 +8,7 @@ interface SeatSelectionProps {
 
 const SeatSelection = ({ ticketCount, onContinueClick }: SeatSelectionProps) => {
   const [selectedSeat, setSelectedSeat] = useState<number []>([])
+  const [error, setError] = useState<string>('');
 
   //Fram til vi har koblet backenden til, så er dette en placeholder for å vise at vi kan velge seter
   const seats = Array.from({ length: 50 }, (_, i) => i + 1);
@@ -20,10 +21,18 @@ const SeatSelection = ({ ticketCount, onContinueClick }: SeatSelectionProps) => 
         else if (selectedSeat.length < ticketCount) {
         setSelectedSeat([...selectedSeat, seatNumber]);
         }
-};
+  };
 
   const isSeatSelected = (seatNumber: number) => selectedSeat.includes(seatNumber);
   const createSeatSelectionString = () => selectedSeat.join(", ");
+
+  const handleOrderTickets = () => {
+    if (selectedSeat.length !== ticketCount) {
+      setError(`You must select ${ticketCount} seat(s)`);
+      return
+    }
+    onContinueClick(selectedSeat);
+  };
 
   return (
     <div className="seat-selection">
@@ -49,9 +58,10 @@ const SeatSelection = ({ ticketCount, onContinueClick }: SeatSelectionProps) => 
             </button>
             ))}
         </div>
-        <button className="confirm-button"  disabled={selectedSeat.length < ticketCount} onClick={() => onContinueClick(selectedSeat)}>
-            Bestill billetter
+        <button className="confirm-button" onClick={() =>          handleOrderTickets()}>
+            Bestill billetter 
         </button>
+        {error && <p className="error-message">{error}</p>}
     </div>
   );
 };
