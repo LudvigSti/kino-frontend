@@ -1,0 +1,35 @@
+.ticket-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.ticket-selection p {
+    font-size: 1.5rem;
+    margin: 2px;
+}
+
+.ticket-amount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(1, 7, 20);
+}
+
+.ticket-amount * {
+    margin: 0 10px;
+}
+
+.ticket-amount button {
+    background-color: rgb(1, 7, 20);
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}

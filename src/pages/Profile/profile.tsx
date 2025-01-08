@@ -3,7 +3,6 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import Button from "../../components/Button/Button";
 import "./profile.css";
 import Cookies from 'js-cookie';
-import { profileEnd } from 'console';
 
 interface Profile {
   profileId: number | null;
@@ -14,6 +13,8 @@ interface Profile {
   points: number;
   icon: string;
 }
+//TODO make a types file for this
+export type { Profile as userProfile };
 
 const Profile: React.FC = () => {
   const userCookie = Cookies.get('user');

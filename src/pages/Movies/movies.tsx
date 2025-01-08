@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import MovieSection from "../../components/MovieSection/MovieSection";
 import AppHeader from "../../components/AppHeader/AppHeader";
 import "./movies.css";
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { Console } from 'console';
 import MoviePoster from '../../components/MoviePoster/MoviePoster';
 import { Link } from 'react-router-dom';
 

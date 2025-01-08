@@ -4,7 +4,6 @@ import MovieDetails from "../../components/MovieDetails/MovieDetails";
 import TimeTable from "../../components/TimeTable/TimeTable";
 import "./movie-page.css";
 import { useEffect, useState } from "react";
-import Button from "../../components/Button/Button";
 
 interface Movie {
   movieId: number;
@@ -61,10 +60,10 @@ const MoviePage = () => {
       <AppHeader />
       <div className='movie-page'>
         <MovieDetails movie={movie} />
-        <Link to={`/buytickets/`}>
-          Buy Ticket
-        </Link>
-        <TimeTable screenings={screenings} movie={movie}/>
+          <Link to={`/buytickets/`}>
+            Buy Ticket
+          </Link>
+        <TimeTable screenings={screenings} />
       </div>
     </div>
   );
